@@ -31,20 +31,26 @@ def read_csv(file_name, p1_fraud, p2_fraud, p3_fraud):
             # There are some broken rows, we have to skip them
             pass
 
+    # ensemble out of sum of 3 probabilities devided by 3
+    ensemble = ensemble_managment(p1_fraud, p2_fraud, p3_fraud)
+
     # finding the stats
     p1_fraud_stats = stats(p1_fraud, 0.5)
     p2_fraud_stats = stats(p2_fraud, 0.5)
     p3_fraud_stats = stats(p3_fraud, 0.5)
+    ensemble_stats = stats(ensemble, 0.5)
 
     # showing the stats of each Magic Box
     print "p1_fraud stats: " + str(p1_fraud_stats[0]) + "\nThreshold: " + str(find_threshold(p1_fraud))
     print "\np2_fraud stats: " + str(p2_fraud_stats[0]) + "\nThreshold: " + str(find_threshold(p2_fraud))
     print "\np3_fraud stats: " + str(p3_fraud_stats[0]) + "\nThreshold: " + str(find_threshold(p3_fraud))
+    print "\nensemble stats: " + str(ensemble_stats[0]) + "\nThreshold: " + str(find_threshold(ensemble))
 
     # making curves
     build_roc_curve(p1_fraud_stats[1], p1_fraud_stats[2])
     build_roc_curve(p2_fraud_stats[1], p2_fraud_stats[2])
     build_roc_curve(p3_fraud_stats[1], p3_fraud_stats[2])
+    build_roc_curve(ensemble_stats[1], ensemble_stats[2])
 
 # Counting tp, pn, fp, fn
 def stats(cases, threshold):
@@ -117,6 +123,19 @@ def find_threshold(system):
         else:
             return threshold
 
+
+# making an ensemble of 3 Magic boxes
+def ensemble_managment(case_1, case_2, case_3):
+    # list for new ensemble
+    ensemble = list()
+
+    i = len(case_1) - 1
+    while i!= 0:
+        # sum of 3 probabilities devided by 3
+        ensemble.append([(float(case_1[i][0])+float(case_2[i][0])+float(case_3[i][0]))/3, case_1[i][1]])
+        i -= 1
+
+    return ensemble
 
 if __name__ == "__main__":
     main()
