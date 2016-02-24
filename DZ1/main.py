@@ -1,7 +1,7 @@
-#import numpy
-#import matplotlib
-#import pandas
-#import scipy
+import numpy
+import matplotlib
+import pandas
+import scipy
 import csv
 
 
