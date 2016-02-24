@@ -33,10 +33,9 @@ def read_csv(file_name, p1_fraud, p2_fraud, p3_fraud):
             pass
 
     # showing the stats of each Magic Box
-    print "p1_fraud stats: " + str(stats(p1_fraud, 0.5))
-    print "p2_fraud stats: " + str(stats(p2_fraud, 0.5))
-    print "p3_fraud stats: " + str(stats(p3_fraud, 0.5))
-
+    print "p1_fraud stats: " + str(stats(p1_fraud, 0.5)) + "\nThreshold: " + str(find_threshold(p1_fraud))
+    print "\np2_fraud stats: " + str(stats(p2_fraud, 0.5)) + "\nThreshold: " + str(find_threshold(p2_fraud))
+    print "\np3_fraud stats: " + str(stats(p3_fraud, 0.5)) + "\nThreshold: " + str(find_threshold(p3_fraud))
 
 # Counting tp, pn, fp, fn
 def stats(cases, threshold):
@@ -64,8 +63,21 @@ def stats(cases, threshold):
     tn_cases = granted_cases - fp_cases
 
     # counting the the stats and returning them in a dictionary
-    stats = {'tp': float(tp_cases)/frod_cases, 'fp': float(fn_cases)/granted_cases, 'tn': float(tn_cases)/granted_cases, 'fn': float(fn_cases)/frod_cases}
-    return stats
+    statistic = {'tp': float(tp_cases)/frod_cases, 'fp': float(fn_cases)/granted_cases,
+                 'tn': float(tn_cases)/granted_cases, 'fn': float(fn_cases)/frod_cases}
+    return statistic
+
+
+# Function to find the threshold for every Magic Box to make fp not more than 0.2
+def find_threshold(system):
+    threshold = 0.9
+    while True:
+        fp = stats(system, threshold)['fp']
+        if fp > 0.2:
+            threshold -= 0.005
+        else:
+            return threshold
+
 
 if __name__ == "__main__":
     main()
