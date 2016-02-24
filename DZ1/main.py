@@ -74,7 +74,7 @@ def find_threshold(system):
     while True:
         fp = stats(system, threshold)['fp']
         if fp > 0.2:
-            threshold -= 0.005
+            threshold -= 0.0009
         else:
             return threshold
 
