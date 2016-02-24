@@ -32,7 +32,10 @@ def read_csv(file_name, p1_fraud, p2_fraud, p3_fraud):
             # There are some broken rows, we have to skip them
             pass
 
-    stats(p1_fraud, 0.5)
+    # showing the stats of each Magic Box
+    print "p1_fraud stats: " + str(stats(p1_fraud, 0.5))
+    print "p2_fraud stats: " + str(stats(p2_fraud, 0.5))
+    print "p3_fraud stats: " + str(stats(p3_fraud, 0.5))
 
 
 # Counting tp, pn, fp, fn
@@ -46,7 +49,7 @@ def stats(cases, threshold):
             if float(case[0]) >= threshold:
                 tp_cases += 1
         # if the probability is bigger then threshold
-        # and case was Granted - then the Magic Box is false
+        # and case was Granted - then the Magic Box is wrong
         elif case[1] == "G":
             granted_cases += 1
             if float(case[0]) >= threshold:
@@ -54,14 +57,15 @@ def stats(cases, threshold):
         # If the result is undefined - skip case
         else:
             continue
+
+    # counting other data for stats
     all_cases = frod_cases + granted_cases
+    fn_cases = frod_cases - tp_cases
+    tn_cases = granted_cases - fp_cases
 
-    print all_cases
-    print frod_cases
-    print granted_cases
-    print tp_cases
-    print fp_cases
-
+    # counting the the stats and returning them in a dictionary
+    stats = {'tp': float(tp_cases)/frod_cases, 'fp': float(fn_cases)/granted_cases, 'tn': float(tn_cases)/granted_cases, 'fn': float(fn_cases)/frod_cases}
+    return stats
 
 if __name__ == "__main__":
     main()
