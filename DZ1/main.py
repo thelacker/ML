@@ -36,7 +36,7 @@ def read_csv(file_name, p1_fraud, p2_fraud, p3_fraud):
     vote_ensemble_8 = vote_ensemble(p1_fraud, p2_fraud, p3_fraud, 0.8)
 
     # ensemble out of sum of 3 probabilities devided by 3
-    ensemble = ensemble_managment(p1_fraud, p2_fraud, p3_fraud, 16, 32, 64)
+    ensemble = ensemble_managment(p1_fraud, p2_fraud, p3_fraud, 1, 1, 1)
 
     # finding the stats
     p1_fraud_stats = stats(p1_fraud, 0.5)
@@ -53,6 +53,10 @@ def read_csv(file_name, p1_fraud, p2_fraud, p3_fraud):
     print "\nvote_ensemble_5 stats: " + str(vote_ensemble_5_stats[0]) + "\nThreshold: " + str(find_threshold(vote_ensemble_5))
     print "\nvote_ensemble_8 stats: " + str(vote_ensemble_8_stats[0]) + "\nThreshold: " + str(find_threshold(vote_ensemble_8))
     print "\nensemble stats: " + str(ensemble_stats[0]) + "\nThreshold: " + str(find_threshold(ensemble))
+
+    # showing the ABC params for the ensemble
+#    print "A, B, C for ensemble = " + str(find_abc(p1_fraud, p2_fraud, p3_fraud))
+
 
     # making curves
     build_roc_curve(p1_fraud_stats[1], p1_fraud_stats[2])
@@ -99,7 +103,7 @@ def stats(cases, threshold):
     tn_cases = granted_cases - fp_cases
 
     # counting the the stats and returning them in a dictionary
-    statistic = {'tp': float(tp_cases)/fraud_cases, 'fp': float(fn_cases)/granted_cases,
+    statistic = {'tp': float(tp_cases)/fraud_cases, 'fp': float(fp_cases)/granted_cases,
                  'tn': float(tn_cases)/granted_cases, 'fn': float(fn_cases)/fraud_cases}
     return [statistic, actual, predictions]
 
@@ -123,11 +127,11 @@ def build_roc_curve(actual, predictions):
 
 # Function to find the threshold for every Magic Box to make fp not more than 0.2
 def find_threshold(system):
-    threshold = 0.9
+    threshold = 0.1
     while True:
         fp = stats(system, threshold)[0]['fp']
         if fp > 0.2:
-            threshold -= 0.1
+            threshold += 0.01
         else:
             return threshold
 
@@ -154,6 +158,22 @@ def vote_ensemble(case_1, case_2, case_3, threshold):
         i -= 1
 
     return ensemble
+
+
+# trying to find the ABC params
+def find_abc(case_1, case_2, case_3):
+    A = B = C = 1
+    for A in range(1,20):
+        for B in range(20,40):
+            for C in range(40,100):
+                ensemble = ensemble_managment(case_1, case_2, case_3, A, B, C)
+                fp = stats(ensemble, 0.5)[0]['fp']
+                print str(A)+ " " + str(B)+ " " + str(C) + " -> " + str(fp)
+                if fp > 0.1:
+                    continue
+                else:
+                    return A, B, C
+    return 1, 1, 1
 
 
 # making an ensemble of 3 Magic boxes
