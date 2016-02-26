@@ -36,7 +36,7 @@ def read_csv(file_name, p1_fraud, p2_fraud, p3_fraud):
     vote_ensemble_8 = vote_ensemble(p1_fraud, p2_fraud, p3_fraud, 0.8)
 
     # ensemble out of sum of 3 probabilities devided by 3
-    ensemble = ensemble_managment(p1_fraud, p2_fraud, p3_fraud)
+    ensemble = ensemble_managment(p1_fraud, p2_fraud, p3_fraud, 16, 32, 64)
 
     # finding the stats
     p1_fraud_stats = stats(p1_fraud, 0.5)
@@ -44,7 +44,7 @@ def read_csv(file_name, p1_fraud, p2_fraud, p3_fraud):
     p3_fraud_stats = stats(p3_fraud, 0.5)
     vote_ensemble_5_stats = stats(vote_ensemble_5, 0.5)
     vote_ensemble_8_stats = stats(vote_ensemble_8, 0.8)
-    ensemble_stats = stats(ensemble, 0.5)
+    ensemble_stats = stats(ensemble, 0.6)
 
     # showing the stats of each Magic Box
     print "p1_fraud stats: " + str(p1_fraud_stats[0]) + "\nThreshold: " + str(find_threshold(p1_fraud))
@@ -127,11 +127,12 @@ def find_threshold(system):
     while True:
         fp = stats(system, threshold)[0]['fp']
         if fp > 0.2:
-            threshold -= 0.09
+            threshold -= 0.1
         else:
             return threshold
 
 
+# making an ensemble by the majority function
 def vote_ensemble(case_1, case_2, case_3, threshold):
     # list for new ensemble
     ensemble = list()
@@ -156,14 +157,14 @@ def vote_ensemble(case_1, case_2, case_3, threshold):
 
 
 # making an ensemble of 3 Magic boxes
-def ensemble_managment(case_1, case_2, case_3):
+def ensemble_managment(case_1, case_2, case_3, A, B, C):
     # list for new ensemble
     ensemble = list()
 
     i = len(case_1) - 1
     while i!= 0:
-        # sum of 3 probabilities devided by 3
-        ensemble.append([(float(case_1[i][0])+float(case_2[i][0])+float(case_3[i][0]))/3, case_1[i][1]])
+        # sum of 3 probabilities with coef. divided by th sum of coef.
+        ensemble.append([A*(float(case_1[i][0])+B*float(case_2[i][0])+C*float(case_3[i][0]))/(A+B+C), case_1[i][1]])
         i -= 1
 
     return ensemble
