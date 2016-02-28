@@ -37,33 +37,45 @@ file_name = "2016.02.20.vyygrusska.csv"
 data = pan.read_csv(filepath_or_buffer=file_name, sep=';')
 
 y = list()
-i = 0
+i=0
 for case in data['CLASS']:
-    i+=1
-    if case == 'G':
-        y.append(0)
-    elif case == 'F':
-        y.append(1)
+    if i < 1000:
+        i+=1
+        if case == 'G':
+            y.append(0)
+        else:
+            y.append(1)
     else:
-        print i
+        break
 
 X = list()
-for case in data['X15']:
-    X.append([float(case)])
+i = 0
+for case in data['X17']:
+    if float(case) != 0:
+        if i < 1000:
+            X.append([float(case)/1000])
+            i+=1
+        else:
+            break
+    else:
+        continue
 i = 0
 for case in data['X18']:
-    X[i].append(float(case))
-    i+=1
+    if float(case) != 0:
+        if i < 1000:
+            X[i].append(float(case)/1000)
+            i+=1
+        else:
+            break
+    else:
+        continue
 
 X = np.array(X)
-rng = np.random.RandomState(2)
-X += 2 * rng.uniform(size=X.shape)
+#rng = np.random.RandomState(2)
+#X += 2 * rng.uniform(size=X.shape)
 linearly_separable = (X, y)
 
-datasets = [make_moons(noise=0.3, random_state=0),
-            make_circles(noise=0.2, factor=0.5, random_state=1),
-            linearly_separable
-            ]
+datasets = [linearly_separable]
 
 figure = plt.figure(figsize=(27, 9))
 i = 1
