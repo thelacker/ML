@@ -1,9 +1,9 @@
-dprint(__doc__)
+print(__doc__)
 
-# Modified for documentation by Jaques Grobler
 # License: BSD 3 clause
 
 import numpy as np
+import pandas as pan
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 from sklearn.cross_validation import train_test_split
@@ -33,8 +33,29 @@ classifiers = [
     LinearDiscriminantAnalysis(),
     QuadraticDiscriminantAnalysis()]
 
-X, y = make_classification(n_features=2, n_redundant=0, n_informative=2,
-                           random_state=1, n_clusters_per_class=1)
+file_name = "2016.02.20.vyygrusska.csv"
+data = pan.read_csv(filepath_or_buffer=file_name, sep=';')
+
+y = list()
+i = 0
+for case in data['CLASS']:
+    i+=1
+    if case == 'G':
+        y.append(0)
+    elif case == 'F':
+        y.append(1)
+    else:
+        print i
+
+X = list()
+for case in data['X15']:
+    X.append([float(case)])
+i = 0
+for case in data['X18']:
+    X[i].append(float(case))
+    i+=1
+
+X = np.array(X)
 rng = np.random.RandomState(2)
 X += 2 * rng.uniform(size=X.shape)
 linearly_separable = (X, y)
