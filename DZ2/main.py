@@ -23,7 +23,7 @@ names = ["Nearest Neighbors", "Linear SVM", "RBF SVM", "Decision Tree",
          "Random Forest", "AdaBoost", "Naive Bayes", "Linear Discriminant Analysis",
          "Quadratic Discriminant Analysis"]
 classifiers = [
-    KNeighborsClassifier(2),
+    #KNeighborsClassifier(15),
     SVC(kernel="linear", C=0.025),
     SVC(gamma=2, C=1),
     DecisionTreeClassifier(max_depth=5),
@@ -36,10 +36,11 @@ classifiers = [
 file_name = "2016.02.20.vyygrusska.csv"
 data = pan.read_csv(filepath_or_buffer=file_name, sep=';')
 
+COUNT = 5000
 y = list()
 i=0
 for case in data['CLASS']:
-    if i < 1000:
+    if i < COUNT:
         i+=1
         if case == 'G':
             y.append(0)
@@ -50,9 +51,9 @@ for case in data['CLASS']:
 
 X = list()
 i = 0
-for case in data['X17']:
+for case in data['X15']:
     if float(case) != 0:
-        if i < 1000:
+        if i < COUNT:
             X.append([float(case)/1000])
             i+=1
         else:
@@ -62,7 +63,28 @@ for case in data['X17']:
 i = 0
 for case in data['X18']:
     if float(case) != 0:
-        if i < 1000:
+        if i < COUNT:
+            X[i].append(float(case)/1000)
+            i+=1
+        else:
+            break
+    else:
+        continue
+
+i = 0
+for case in data['X13']:
+    if float(case) != 0:
+        if i < COUNT:
+            X[i].append(float(case)/1000)
+            i+=1
+        else:
+            break
+    else:
+        continue
+i = 0
+for case in data['X17']:
+    if float(case) != 0:
+        if i < COUNT:
             X[i].append(float(case)/1000)
             i+=1
         else:
@@ -77,7 +99,7 @@ linearly_separable = (X, y)
 
 datasets = [linearly_separable]
 
-figure = plt.figure(figsize=(27, 9))
+figure = plt.figure(figsize=(27, 3))
 i = 1
 # iterate over datasets
 for ds in datasets:
