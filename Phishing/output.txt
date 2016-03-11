@@ -1,0 +1,14 @@
+Score of Nearest Neighbors:
+0.933966530981
+
+Score of Linear Discriminant Analysis:
+0.927408412483
+
+Score of Quadratic Discriminant Analysis:
+0.570556309362
+
+Score of Gaussian Analysis:
+0.589552238806
+
+Score of ensamble:
+0.939620081411
