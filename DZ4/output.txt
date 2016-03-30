@@ -1,0 +1,15 @@
+Score of Nearest Neighbors:
+0.925146992311
+
+Score of Linear Discriminant Analysis:
+0.919493441882
+
+Score of Quadratic Discriminant Analysis:
+0.582315694256
+
+Score of Gaussian Analysis:
+0.61013116237
+
+Score of ensemble:
+0.900045228403
+Coef = [8.437994858625956e+304, 2.5057391485871756e-39, 3.1800675145172693e+136, 3.1800675145172693e+136]

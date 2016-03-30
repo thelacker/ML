@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b07458e2-0034-44a5-87e7-7bce5aaa28fa" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DZ4/main.py" afterPath="$PROJECT_DIR$/DZ4/main.py" />
     </list>
     <ignored path="ML.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -328,7 +327,13 @@
       <option name="project" value="LOCAL" />
       <updated>1459341940368</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="New features added">
+      <created>1459342358758</created>
+      <option name="number" value="00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1459342358758</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -368,7 +373,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Job done" />
-    <option name="LAST_COMMIT_MESSAGE" value="Job done" />
+    <MESSAGE value="New features added" />
+    <option name="LAST_COMMIT_MESSAGE" value="New features added" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
