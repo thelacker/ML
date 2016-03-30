@@ -5,6 +5,7 @@ __pycache__/
 
 # C extensions
 *.so
+$GIT_DIR/.idea/
 
 # Distribution / packaging
 .Python
