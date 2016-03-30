@@ -66,11 +66,11 @@ Coef = [10, 10, 10, 10]
 i = 0
 true = 0
 all = 0
+ef = 3.0
 new_X_test = list()
 for x in X_test:
     Class = [classifiers[0].predict_proba(x), classifiers[1].predict_proba(x), classifiers[2].predict_proba(x), classifiers[3].predict_proba(x)]
-    proba = (Coef[0]*(Class[0] - 0.5) + Coef[1]*(Class[1] - 0.5) +
-    Coef[2]*(Class[2] - 0.5) + Coef[3]*(Class[3] - 0.5))
+    proba = (Coef[0]*(Class[0] - 0.7) + Coef[1]*(Class[1] - 0.7) + Coef[2]*(Class[2] - 0.3) + Coef[3]*(Class[3] - 0.4))
     new_X_test.append(proba)
 
     if y_test[i] == 0:
@@ -78,41 +78,41 @@ for x in X_test:
             true += 1
         else:
             if Class[0][0][0] < 0:
-                Coef[0] = Coef[0] / 2.0
+                Coef[0] = Coef[0] / ef
             else:
-                Coef[0] = Coef[0] * 2.0
+                Coef[0] = Coef[0] * ef
             if Class[1][0][0] < 0:
-                Coef[1] = Coef[1] / 2.0
+                Coef[1] = Coef[1] / ef
             else:
-                Coef[0] = Coef[0] * 2.0
+                Coef[0] = Coef[0] * ef
             if Class[2][0][0] < 0:
-                Coef[2] = Coef[2] / 2.0
+                Coef[2] = Coef[2] / ef
             else:
-                Coef[2] = Coef[2] * 2.0
+                Coef[2] = Coef[2] * ef
             if Class[3][0][0] < 0:
-                Coef[3] = Coef[3] / 2.0
+                Coef[3] = Coef[3] / ef
             else:
-                Coef[3] = Coef[3] * 2.0
+                Coef[3] = Coef[3] * ef
     else:
         if new_X_test[-1][0][0] < 0:
             true += 1
         else:
             if Class[0][0][0] > 0:
-                Coef[0] = Coef[0] / 2.0
+                Coef[0] = Coef[0] / ef
             else:
-                Coef[0] = Coef[0] * 2.0
+                Coef[0] = Coef[0] * ef
             if Class[1][0][0] > 0:
-                Coef[1] = Coef[1] / 2.0
+                Coef[1] = Coef[1] / ef
             else:
-                Coef[0] = Coef[0] * 2.0
+                Coef[0] = Coef[0] * ef
             if Class[2][0][0] > 0:
-                Coef[2] = Coef[2] / 2.0
+                Coef[2] = Coef[2] / ef
             else:
-                Coef[2] = Coef[2] * 2.0
+                Coef[2] = Coef[2] * ef
             if Class[3][0][0] > 0:
-                Coef[3] = Coef[3] / 2.0
+                Coef[3] = Coef[3] / ef
             else:
-                Coef[3] = Coef[3] * 2.0
+                Coef[3] = Coef[3] * ef
 
     all += 1
     i += 1
